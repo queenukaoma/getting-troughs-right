@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Escalation Guide — Getting Troughs Right</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #f0f4f8; min-height: 100vh; }
+
+  .header {
+    background: linear-gradient(135deg, #1a5276, #2471a3);
+    padding: 20px 24px; text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+  .header h1 { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: 2px; }
+  .header p { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); margin-top: 4px; }
+
+  .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+
+  .decision { display: none; flex-direction: column; gap: 14px; animation: fadeIn 0.3s ease; }
+  .decision.active { display: flex; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  .card {
+    background: #fff; border-radius: 16px; padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center;
+  }
+  .card-icon { font-size: 48px; margin-bottom: 10px; }
+  .card-q { font-size: 18px; font-weight: 800; color: #2c3e50; line-height: 1.4; }
+
+  .btn-group { display: flex; gap: 12px; }
+  .btn {
+    flex: 1; padding: 16px; border: none; border-radius: 14px;
+    font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800;
+    cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.15s;
+    color: #fff; min-height: 56px;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-yes { background: linear-gradient(135deg, #27ae60, #2ecc71); box-shadow: 0 4px 14px rgba(39,174,96,0.3); }
+  .btn-no { background: linear-gradient(135deg, #e74c3c, #c0392b); box-shadow: 0 4px 14px rgba(231,76,60,0.3); }
+  .btn-action { background: linear-gradient(135deg, #2471a3, #1a5276); box-shadow: 0 4px 14px rgba(36,113,163,0.3); }
+  .btn-restart { background: #fff; border: 2px solid #dfe6e9; color: #2c3e50; font-size: 14px; box-shadow: none; }
+
+  .result {
+    border-radius: 16px; padding: 28px; text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .result-icon { font-size: 48px; margin-bottom: 8px; }
+  .result h3 { font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .result p { font-size: 14px; font-weight: 600; line-height: 1.6; }
+
+  .result-green { background: linear-gradient(135deg, #d5f5e3, #a9dfbf); border: 3px solid #27ae60; }
+  .result-green h3, .result-green p { color: #1e8449; }
+  .result-blue { background: linear-gradient(135deg, #d4e6ff, #a9cce3); border: 3px solid #2471a3; }
+  .result-blue h3, .result-blue p { color: #1a5276; }
+  .result-yellow { background: linear-gradient(135deg, #fef9e7, #fdeaa8); border: 3px solid #f39c12; }
+  .result-yellow h3, .result-yellow p { color: #7d6608; }
+
+  .action-list {
+    text-align: left; margin-top: 12px; padding: 16px; background: rgba(255,255,255,0.5);
+    border-radius: 12px;
+  }
+  .action-list li {
+    font-size: 14px; font-weight: 600; color: #2c3e50; padding: 4px 0;
+    list-style: none; display: flex; gap: 8px;
+  }
+  .action-list li::before { content: ''; min-width: 18px; }
+
+  .back-link {
+    display: block; text-align: center; margin-top: 20px; font-size: 13px;
+    font-weight: 700; color: #2471a3; text-decoration: none;
+  }
+
+  .footer {
+    text-align: center; padding: 16px; font-size: 10px; font-weight: 600; color: #7f8c8d;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Missed-Window Escalation</h1>
+  <p>What to do when the trough timing window is missed</p>
+</div>
+
+<div class="container">
+
+  <!-- START -->
+  <div class="decision active" id="d0">
+    <div class="card">
+      <div class="card-icon">&#128556;</div>
+      <div class="card-q">Is this a heart transplant patient with a trough order today?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="show('d1')">Yes</button>
+      <button class="btn btn-no" onclick="show('r_routine')">No</button>
+    </div>
+  </div>
+
+  <!-- WAS IT DRAWN IN WINDOW? -->
+  <div class="decision" id="d1">
+    <div class="card">
+      <div class="card-icon">&#9200;</div>
+      <div class="card-q">Was the trough drawn between 08:15 and 08:45?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="show('r_good')">Yes</button>
+      <button class="btn btn-no" onclick="show('d2')">No</button>
+    </div>
+  </div>
+
+  <!-- WHAT HAPPENED? -->
+  <div class="decision" id="d2">
+    <div class="card">
+      <div class="card-icon">&#10067;</div>
+      <div class="card-q">What happened?</div>
+    </div>
+    <button class="btn btn-action" onclick="show('r_nightshift')" style="margin-bottom:4px">Night shift drew with 03:00&ndash;04:00 AM labs</button>
+    <button class="btn btn-action" onclick="show('r_missed')" style="margin-bottom:4px">It's past 09:00 and no trough was drawn</button>
+    <button class="btn btn-action" onclick="show('r_ambiguous')">Dosing times or med schedule is unclear</button>
+  </div>
+
+  <!-- RESULT: ROUTINE -->
+  <div class="decision" id="r_routine">
+    <div class="result result-blue">
+      <div class="result-icon">&#128196;</div>
+      <h3>Routine Care</h3>
+      <p>Not a trough day for this patient. No escalation needed.</p>
+    </div>
+    <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
+  </div>
+
+  <!-- RESULT: GOOD -->
+  <div class="decision" id="r_good">
+    <div class="result result-green">
+      <div class="result-icon">&#9989;</div>
+      <h3>On Target</h3>
+      <p>Trough was drawn in the correct window.</p>
+      <div class="action-list">
+        <li>&#128138; Administer dose by 09:00</li>
+        <li>&#128221; Document actual last-dose time in MAR</li>
+        <li>&#9202; Do NOT hold dose for lab result</li>
+      </div>
+    </div>
+    <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
+  </div>
+
+  <!-- RESULT: NIGHT SHIFT -->
+  <div class="decision" id="r_nightshift">
+    <div class="result result-yellow">
+      <div class="result-icon">&#127769;</div>
+      <h3>Escalate &mdash; Night Shift Draw</h3>
+      <p>A 03:00&ndash;04:00 AM draw is NOT a true trough. It's 5+ hours early.</p>
+      <div class="action-list">
+        <li>&#128222; Contact transplant provider immediately</li>
+        <li>&#128203; Provider decides: accept level or order re-draw at correct time</li>
+        <li>&#128221; Document the variance and provider decision in the chart</li>
+        <li>&#128138; Do NOT hold the dose while waiting</li>
+      </div>
+    </div>
+    <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
+  </div>
+
+  <!-- RESULT: MISSED WINDOW -->
+  <div class="decision" id="r_missed">
+    <div class="result result-yellow">
+      <div class="result-icon">&#9888;&#65039;</div>
+      <h3>Escalate &mdash; Window Missed</h3>
+      <p>It's past 09:00 and no trough was drawn.</p>
+      <div class="action-list">
+        <li>&#128222; Contact transplant provider immediately</li>
+        <li>&#128203; Provider decides: draw now and note delay, or skip today</li>
+        <li>&#128221; Document the variance and provider decision</li>
+        <li>&#128138; Administer the dose &mdash; do NOT continue to hold</li>
+      </div>
+    </div>
+    <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
+  </div>
+
+  <!-- RESULT: AMBIGUOUS -->
+  <div class="decision" id="r_ambiguous">
+    <div class="result result-yellow">
+      <div class="result-icon">&#128300;</div>
+      <h3>Escalate &mdash; Clarify Timing</h3>
+      <p>There's ambiguity about dosing times or the medication schedule.</p>
+      <div class="action-list">
+        <li>&#128222; Contact transplant provider</li>
+        <li>&#128203; Clarify actual last-dose time and next dose time</li>
+        <li>&#128221; Document the clarification in the MAR</li>
+        <li>&#129656; Draw when the correct window is confirmed</li>
+      </div>
+    </div>
+    <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
+  </div>
+
+  <a href="index.html" class="back-link">&larr; Back to Clinical Education Site</a>
+</div>
+
+<div class="footer">
+  Getting Troughs Right &mdash; Ascension Seton Medical Center<br>
+  PI: Queen Ukaoma, MSN, APRN, ACNPC-AG, CCRN-CMC
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.decision').forEach(d => d.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

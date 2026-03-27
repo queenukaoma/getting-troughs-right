@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Nurse Quick Guide — Getting Troughs Right</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #f0f4f8; min-height: 100vh; }
+
+  .header {
+    background: linear-gradient(135deg, #c0392b, #e74c3c); padding: 20px 24px;
+    text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+  .header h1 { font-size: 20px; font-weight: 900; color: #fff; letter-spacing: 2px; }
+  .header p { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); margin-top: 4px; }
+
+  .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+
+  .card {
+    background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .card-title {
+    font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid;
+  }
+
+  .step-row { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .step-row:last-child { border-bottom: none; }
+  .step-time { font-size: 16px; font-weight: 900; color: #2c3e50; min-width: 65px; }
+  .step-action { font-size: 14px; font-weight: 600; color: #555; line-height: 1.5; }
+  .step-icon { font-size: 24px; min-width: 32px; text-align: center; }
+
+  .identify { border-left: 5px solid #2471a3; }
+  .identify .card-title { color: #2471a3; border-color: #2471a3; }
+
+  .timing { border-left: 5px solid #27ae60; }
+  .timing .card-title { color: #27ae60; border-color: #27ae60; }
+
+  .documentation { border-left: 5px solid #8e44ad; }
+  .documentation .card-title { color: #8e44ad; border-color: #8e44ad; }
+
+  .escalation { border-left: 5px solid #e67e22; }
+  .escalation .card-title { color: #e67e22; border-color: #e67e22; }
+
+  .warning-box {
+    background: #fdf2f2; border: 2px solid #e74c3c; border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
+  }
+  .warning-icon { font-size: 24px; }
+  .warning-text { font-size: 14px; font-weight: 700; color: #c0392b; line-height: 1.4; }
+
+  .why-box {
+    background: linear-gradient(135deg, #eaf2ff, #d4e6ff); border-radius: 16px;
+    padding: 20px; margin-bottom: 14px;
+  }
+  .why-box h3 { font-size: 14px; font-weight: 800; color: #1a5276; margin-bottom: 8px; }
+  .why-box p { font-size: 13px; font-weight: 600; color: #2471a3; line-height: 1.6; }
+
+  .back-link {
+    display: block; text-align: center; margin-top: 16px; font-size: 13px;
+    font-weight: 700; color: #c0392b; text-decoration: none;
+  }
+  .footer {
+    text-align: center; padding: 16px; font-size: 10px; font-weight: 600; color: #7f8c8d;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Nurse Quick Guide</h1>
+  <p>Transplant C0 Trough Timing Protocol</p>
+</div>
+
+<div class="container">
+
+  <div class="card identify">
+    <div class="card-title">Step 1 &mdash; Identify</div>
+    <div class="step-row">
+      <div class="step-icon">&#10084;&#65039;</div>
+      <div class="step-action">Is your patient a <strong>heart transplant recipient</strong>?</div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">&#128682;</div>
+      <div class="step-action">Place the <strong>TRANSPLANT</strong> door sign</div>
+    </div>
+  </div>
+
+  <div class="card timing">
+    <div class="card-title">Step 2 &mdash; Timing</div>
+    <div class="step-row">
+      <div class="step-time">07:30</div>
+      <div class="step-action">Check: is today's trough order present? If NOT, page/contact provider</div>
+    </div>
+    <div class="step-row">
+      <div class="step-time">08:30</div>
+      <div class="step-action">Draw tacrolimus / sirolimus / cyclosporine trough<br><em style="color:#27ae60;font-size:12px">(window: 08:15 &ndash; 08:45)</em></div>
+    </div>
+    <div class="step-row">
+      <div class="step-time">09:00</div>
+      <div class="step-action">Administer the scheduled dose <strong>immediately after the draw</strong></div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-icon">&#128683;</div>
+    <div class="warning-text">Do NOT hold the dose to wait for the lab result.</div>
+  </div>
+
+  <div class="card documentation">
+    <div class="card-title">Step 3 &mdash; Document</div>
+    <div class="step-row">
+      <div class="step-icon">&#128221;</div>
+      <div class="step-action"><strong>Last-dose time</strong> = MAR "Given" time of the <strong>previous</strong> dose</div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">&#9200;</div>
+      <div class="step-action">Chart the <strong>actual clock time</strong> for each administration (not the scheduled time)</div>
+    </div>
+  </div>
+
+  <div class="card escalation">
+    <div class="card-title">Step 4 &mdash; Escalate When:</div>
+    <div class="step-row">
+      <div class="step-icon">&#127769;</div>
+      <div class="step-action">Night shift drew with 03:00&ndash;04:00 morning labs (incorrect timing)</div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">&#9888;&#65039;</div>
+      <div class="step-action">The 08:30 window is missed (it is &ge;09:00 and no trough was drawn)</div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon">&#10067;</div>
+      <div class="step-action">Any ambiguity about dosing/med times</div>
+    </div>
+  </div>
+
+  <div class="why-box">
+    <h3>Why This Matters</h3>
+    <p>Tacrolimus and sirolimus have narrow therapeutic windows. A level drawn at the wrong time can look too high or too low. Wrong levels lead to unnecessary dose changes that get reversed in &lt;72 hours. <strong>Correct timing = reliable levels = safer dosing decisions.</strong></p>
+  </div>
+
+  <a href="index.html" class="back-link">&larr; Back to Clinical Education Site</a>
+</div>
+
+<div class="footer">
+  Getting Troughs Right &mdash; Ascension Seton Medical Center<br>
+  PI: Queen Ukaoma, MSN, APRN, ACNPC-AG, CCRN-CMC
+</div>
+</body>
+</html>

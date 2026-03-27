@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Trough Protocol — Patient Screening</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --green: #27ae60;
+    --green-bg: #d5f5e3;
+    --yellow: #f39c12;
+    --yellow-bg: #fef9e7;
+    --blue: #2471a3;
+    --blue-bg: #d4e6ff;
+    --gray: #7f8c8d;
+    --gray-bg: #ecf0f1;
+    --dark: #2c3e50;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* === HEADER === */
+  .header {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+    padding: 16px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+
+  .header-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .header-sub {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  /* === MAIN CONTENT === */
+  .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* === SCREENS (hidden by default) === */
+  .screen {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .screen.active {
+    display: flex;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === PROGRESS BAR === */
+  .progress-bar {
+    height: 6px;
+    background: #dfe6e9;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red-light), var(--red));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray);
+    text-align: right;
+    letter-spacing: 0.5px;
+  }
+
+  /* === QUESTION CARD === */
+  .question-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+
+  .question-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .question-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .question-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.4;
+  }
+
+  /* === BUTTONS === */
+  .btn-group {
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 18px 16px;
+    border: none;
+    border-radius: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 60px;
+  }
+
+  .btn:active {
+    transform: scale(0.96);
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(39,174,96,0.35);
+  }
+
+  .btn-no {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(231,76,60,0.35);
+  }
+
+  .btn-start {
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(192,57,43,0.35);
+    font-size: 20px;
+    padding: 22px;
+  }
+
+  .btn-restart {
+    background: var(--white);
+    border: 2px solid #dfe6e9;
+    color: var(--dark);
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: none;
+    padding: 14px;
+  }
+
+  .btn-restart:active {
+    background: #f8f9fa;
+  }
+
+  /* === RESULT CARDS === */
+  .result-card {
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .result-icon {
+    font-size: 56px;
+    margin-bottom: 12px;
+  }
+
+  .result-title {
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .result-reason {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+
+  /* Result variants */
+  .result-include {
+    background: linear-gradient(135deg, #d5f5e3, #a9dfbf);
+    border: 3px solid var(--green);
+  }
+  .result-include .result-title { color: #1e8449; }
+  .result-include .result-reason { color: #1e8449; }
+
+  .result-exclude {
+    background: linear-gradient(135deg, #fef9e7, #fdeaa8);
+    border: 3px solid var(--yellow);
+  }
+  .result-exclude .result-title { color: #b7950b; }
+  .result-exclude .result-reason { color: #7d6608; }
+
+  .result-not-eligible {
+    background: linear-gradient(135deg, #ecf0f1, #d5dbdb);
+    border: 3px solid var(--gray);
+  }
+  .result-not-eligible .result-title { color: #5d6d7e; }
+  .result-not-eligible .result-reason { color: #5d6d7e; }
+
+  .result-no-trough {
+    background: linear-gradient(135deg, #d4e6ff, #a9cce3);
+    border: 3px solid var(--blue);
+  }
+  .result-no-trough .result-title { color: #1a5276; }
+  .result-no-trough .result-reason { color: #1a5276; }
+
+  /* === PROTOCOL BOX (on include screen) === */
+  .protocol-box {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .protocol-box-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .protocol-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .protocol-step:last-child {
+    border-bottom: none;
+  }
+
+  .protocol-time {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--dark);
+    min-width: 70px;
+  }
+
+  .protocol-action {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .protocol-warning {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #fdf2f2;
+    border-left: 4px solid var(--red-light);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red);
+  }
+
+  /* === WELCOME SCREEN === */
+  .welcome-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 36px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+
+  .welcome-heart {
+    font-size: 56px;
+    margin-bottom: 8px;
+  }
+
+  .welcome-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .welcome-sub {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+
+  .welcome-criteria {
+    text-align: left;
+    margin: 16px 0;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+  }
+
+  .welcome-criteria-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .criteria-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  .criteria-check {
+    color: var(--green);
+    font-weight: 900;
+    min-width: 18px;
+  }
+
+  .criteria-x {
+    color: var(--red);
+    font-weight: 900;
+    min-width: 18px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray);
+    letter-spacing: 0.5px;
+  }
+
+  .footer a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-title">Transplant Trough Protocol</div>
+  <div class="header-sub">Patient Screening Tool</div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== WELCOME ==================== -->
+  <div class="screen active" id="welcome">
+    <div class="welcome-card">
+      <div class="welcome-heart">
+        <svg viewBox="0 0 200 200" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#ff6b6b"/>
+              <stop offset="100%" style="stop-color:#a10000"/>
+            </linearGradient>
+          </defs>
+          <path d="M100 175 C55 140,10 105,15 65 C18 40,38 25,60 28 C75 30,88 42,100 58 C112 42,125 30,140 28 C162 25,182 40,185 65 C190 105,145 140,100 175Z" fill="url(#hg)"/>
+          <polyline points="30,100 55,100 65,100 72,100 78,85 84,120 90,75 96,110 100,90 104,100 140,100 170,100" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="welcome-title">Does This Patient Qualify?</div>
+      <div class="welcome-sub">Answer a few quick questions to determine if the trough timing protocol applies.</div>
+
+      <div class="welcome-criteria">
+        <div class="welcome-criteria-title">Inclusion</div>
+        <div class="criteria-item"><span class="criteria-check">+</span> Adult (>=18 years)</div>
+        <div class="criteria-item"><span class="criteria-check">+</span> Heart transplant recipient</div>
+        <div class="criteria-item"><span class="criteria-check">+</span> Admitted to ICU, IMC, or Telemetry</div>
+        <div class="criteria-item"><span class="criteria-check">+</span> On tacrolimus, sirolimus, cyclosporine, or everolimus</div>
+        <div class="criteria-item"><span class="criteria-check">+</span> Trough level ordered today</div>
+      </div>
+
+      <div class="welcome-criteria">
+        <div class="welcome-criteria-title">Exclusion</div>
+        <div class="criteria-item"><span class="criteria-x">&minus;</span> OR/code event day</div>
+        <div class="criteria-item"><span class="criteria-x">&minus;</span> NPO / pre-procedural / clinically unstable</div>
+        <div class="criteria-item"><span class="criteria-x">&minus;</span> Transferred off participating unit mid-draw</div>
+      </div>
+    </div>
+
+    <button class="btn btn-start" onclick="goTo('q1')">Start Screening</button>
+  </div>
+
+  <!-- ==================== Q1: Age ==================== -->
+  <div class="screen" id="q1">
+    <div class="progress-bar"><div class="progress-fill" style="width:12%"></div></div>
+    <div class="progress-label">Question 1 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#128100;</div>
+      <div class="question-label">Inclusion Criteria</div>
+      <div class="question-text">Is the patient 18 years or older?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="goTo('q2')">Yes</button>
+      <button class="btn btn-no" onclick="goTo('r_not_eligible', 'Pediatric patient (age < 18)')">No</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q2: OHT ==================== -->
+  <div class="screen" id="q2">
+    <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+    <div class="progress-label">Question 2 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#10084;&#65039;</div>
+      <div class="question-label">Inclusion Criteria</div>
+      <div class="question-text">Is the patient a heart transplant recipient?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="goTo('q3')">Yes</button>
+      <button class="btn btn-no" onclick="goTo('r_not_eligible', 'Not a heart transplant recipient')">No</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q3: Unit ==================== -->
+  <div class="screen" id="q3">
+    <div class="progress-bar"><div class="progress-fill" style="width:37%"></div></div>
+    <div class="progress-label">Question 3 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#127959;&#65039;</div>
+      <div class="question-label">Inclusion Criteria</div>
+      <div class="question-text">Is the patient admitted to ICU, IMC/step-down, or telemetry?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="goTo('q4')">Yes</button>
+      <button class="btn btn-no" onclick="goTo('r_not_eligible', 'Not on a participating unit')">No</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q4: Immunosuppressant ==================== -->
+  <div class="screen" id="q4">
+    <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+    <div class="progress-label">Question 4 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#128138;</div>
+      <div class="question-label">Inclusion Criteria</div>
+      <div class="question-text">Is the patient on tacrolimus, sirolimus, cyclosporine, or everolimus?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="goTo('q5')">Yes</button>
+      <button class="btn btn-no" onclick="goTo('r_not_eligible', 'Not on a monitored immunosuppressant')">No</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q5: Trough ordered ==================== -->
+  <div class="screen" id="q5">
+    <div class="progress-bar"><div class="progress-fill" style="width:62%"></div></div>
+    <div class="progress-label">Question 5 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#129656;</div>
+      <div class="question-label">Inclusion Criteria</div>
+      <div class="question-text">Does this patient have a trough level ordered for today?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-yes" onclick="goTo('q6')">Yes</button>
+      <button class="btn btn-no" onclick="goTo('r_no_trough')">No</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q6: OR/Code ==================== -->
+  <div class="screen" id="q6">
+    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+    <div class="progress-label">Question 6 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#128680;</div>
+      <div class="question-label">Exclusion Check</div>
+      <div class="question-text">Is today an OR day or did the patient have a code event?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-no" onclick="goTo('q7')">No</button>
+      <button class="btn btn-yes" onclick="goTo('r_exclude', 'OR/code event day &mdash; timing not feasible')" style="background:linear-gradient(135deg,#f39c12,#e67e22);box-shadow:0 4px 14px rgba(243,156,18,0.35)">Yes, Exclude</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q7: NPO/Unstable ==================== -->
+  <div class="screen" id="q7">
+    <div class="progress-bar"><div class="progress-fill" style="width:87%"></div></div>
+    <div class="progress-label">Question 7 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#9888;&#65039;</div>
+      <div class="question-label">Exclusion Check</div>
+      <div class="question-text">Is the patient clinically unstable, NPO, or pre-procedural?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-no" onclick="goTo('q8')">No</button>
+      <button class="btn btn-yes" onclick="goTo('r_exclude', 'Clinical instability / NPO / pre-procedural status')" style="background:linear-gradient(135deg,#f39c12,#e67e22);box-shadow:0 4px 14px rgba(243,156,18,0.35)">Yes, Exclude</button>
+    </div>
+  </div>
+
+  <!-- ==================== Q8: Transfer ==================== -->
+  <div class="screen" id="q8">
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <div class="progress-label">Question 8 of 8</div>
+    <div class="question-card">
+      <div class="question-icon">&#128690;</div>
+      <div class="question-label">Exclusion Check</div>
+      <div class="question-text">Is the patient being transferred off the participating unit?</div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-no" onclick="goTo('r_include')">No</button>
+      <button class="btn btn-yes" onclick="goTo('r_exclude', 'Transferred off participating unit mid-draw')" style="background:linear-gradient(135deg,#f39c12,#e67e22);box-shadow:0 4px 14px rgba(243,156,18,0.35)">Yes, Exclude</button>
+    </div>
+  </div>
+
+  <!-- ==================== RESULT: INCLUDE ==================== -->
+  <div class="screen" id="r_include">
+    <div class="result-card result-include">
+      <div class="result-icon">&#9989;</div>
+      <div class="result-title">Include</div>
+      <div class="result-reason">This patient qualifies. Follow the trough timing protocol.</div>
+    </div>
+
+    <div class="protocol-box">
+      <div class="protocol-box-title">Protocol Quick Reference</div>
+      <div class="protocol-step">
+        <div class="protocol-time">07:30</div>
+        <div class="protocol-action">Verify trough order is present</div>
+      </div>
+      <div class="protocol-step">
+        <div class="protocol-time">08:30</div>
+        <div class="protocol-action">Draw trough level (window 08:15&ndash;08:45)</div>
+      </div>
+      <div class="protocol-step">
+        <div class="protocol-time">09:00</div>
+        <div class="protocol-action">Administer dose immediately after draw</div>
+      </div>
+      <div class="protocol-step">
+        <div class="protocol-time">MAR</div>
+        <div class="protocol-action">Document actual last-dose clock time</div>
+      </div>
+      <div class="protocol-warning">Do NOT draw with routine AM labs (03:00&ndash;04:00). Do NOT hold dose for lab result.</div>
+    </div>
+
+    <button class="btn btn-restart" onclick="goTo('welcome')">Screen Another Patient</button>
+  </div>
+
+  <!-- ==================== RESULT: EXCLUDE ==================== -->
+  <div class="screen" id="r_exclude">
+    <div class="result-card result-exclude">
+      <div class="result-icon">&#9888;&#65039;</div>
+      <div class="result-title">Exclude</div>
+      <div class="result-reason" id="exclude-reason"></div>
+      <div class="result-reason" style="margin-top:8px;font-size:13px;opacity:0.8">Document exclusion reason in the chart. Routine care applies.</div>
+    </div>
+    <button class="btn btn-restart" onclick="goTo('welcome')">Screen Another Patient</button>
+  </div>
+
+  <!-- ==================== RESULT: NOT ELIGIBLE ==================== -->
+  <div class="screen" id="r_not_eligible">
+    <div class="result-card result-not-eligible">
+      <div class="result-icon">&#10060;</div>
+      <div class="result-title">Not Eligible</div>
+      <div class="result-reason" id="not-eligible-reason"></div>
+      <div class="result-reason" style="margin-top:8px;font-size:13px;opacity:0.8">This patient does not meet inclusion criteria. Routine care.</div>
+    </div>
+    <button class="btn btn-restart" onclick="goTo('welcome')">Screen Another Patient</button>
+  </div>
+
+  <!-- ==================== RESULT: NO TROUGH ==================== -->
+  <div class="screen" id="r_no_trough">
+    <div class="result-card result-no-trough">
+      <div class="result-icon">&#128196;</div>
+      <div class="result-title">No Trough Today</div>
+      <div class="result-reason">Patient is eligible but no trough level is ordered for today.</div>
+      <div class="result-reason" style="margin-top:8px;font-size:13px;opacity:0.8">No action needed. Re-screen on the next trough draw day.</div>
+    </div>
+    <button class="btn btn-restart" onclick="goTo('welcome')">Screen Another Patient</button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Getting Troughs Right &mdash; Ascension Seton Medical Center<br>
+  PI: Queen Ukaoma, MSN, APRN, ACNPC-AG, CCRN-CMC<br>
+  Window missed? Contact transplant provider immediately.
+</div>
+
+<script>
+  function goTo(screenId, reason) {
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(s => {
+      s.classList.remove('active');
+    });
+
+    // Set reason text for result screens
+    if (screenId === 'r_exclude' && reason) {
+      document.getElementById('exclude-reason').innerHTML = reason;
+    }
+    if (screenId === 'r_not_eligible' && reason) {
+      document.getElementById('not-eligible-reason').innerHTML = reason;
+    }
+
+    // Show target screen
+    const target = document.getElementById(screenId);
+    target.classList.add('active');
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
