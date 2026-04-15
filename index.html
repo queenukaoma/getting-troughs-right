@@ -282,6 +282,58 @@
   .fc-green h4 { color: var(--green); }
   .fc-blue { border-color: var(--blue); }
   .fc-blue h4 { color: var(--blue); }
+  .fc-purple { border-color: var(--purple); }
+  .fc-purple h4 { color: var(--purple); }
+
+  /* Bonus Observation Cards */
+  .reveal-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px; margin-top: 32px;
+  }
+  .reveal-card {
+    background: var(--white); border-radius: 18px; padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    border-top: 5px solid;
+  }
+  .reveal-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
+  .reveal-card::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 90px; height: 90px; border-radius: 50%;
+    opacity: 0.08; transform: translate(30%, -30%);
+  }
+  .reveal-stat {
+    font-size: 52px; font-weight: 900; line-height: 1; margin-bottom: 10px;
+    position: relative; z-index: 1;
+  }
+  .reveal-stat span.sub { font-size: 22px; font-weight: 700; margin-left: 4px; opacity: 0.6; }
+  .reveal-title {
+    font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+    margin-bottom: 8px; color: var(--dark);
+  }
+  .reveal-text {
+    font-size: 13.5px; font-weight: 600; color: #555; line-height: 1.55;
+  }
+  .rc-red { border-color: var(--red); }
+  .rc-red .reveal-stat { color: var(--red); }
+  .rc-red::before { background: var(--red); }
+  .rc-orange { border-color: #e67e22; }
+  .rc-orange .reveal-stat { color: #e67e22; }
+  .rc-orange::before { background: #e67e22; }
+  .rc-green { border-color: var(--green); }
+  .rc-green .reveal-stat { color: var(--green); }
+  .rc-green::before { background: var(--green); }
+  .rc-blue { border-color: var(--blue); }
+  .rc-blue .reveal-stat { color: var(--blue); }
+  .rc-blue::before { background: var(--blue); }
+  .rc-purple { border-color: var(--purple); }
+  .rc-purple .reveal-stat { color: var(--purple); }
+  .rc-purple::before { background: var(--purple); }
+
+  /* Reveal section background */
+  .reveal { background: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%); }
+  .reveal .section-label { color: var(--red); }
 
   /* === CTA === */
   .cta {
@@ -291,15 +343,100 @@
   .cta .section-title { color: var(--white); }
   .cta-text { font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto; line-height: 1.7; }
   .cta-steps {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px; margin-top: 32px; max-width: 700px; margin-left: auto; margin-right: auto;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 12px; margin-top: 32px; max-width: 1000px; margin-left: auto; margin-right: auto;
+  }
+  @media (max-width: 900px) {
+    .cta-steps { grid-template-columns: repeat(2, 1fr); max-width: 520px; }
+  }
+  @media (max-width: 480px) {
+    .cta-steps { grid-template-columns: 1fr; }
   }
   .cta-step {
-    background: rgba(255,255,255,0.15); border-radius: 16px; padding: 20px;
+    background: rgba(255,255,255,0.15); border-radius: 14px; padding: 18px 14px;
     border: 1px solid rgba(255,255,255,0.2);
   }
-  .cta-step-num { font-size: 32px; font-weight: 900; opacity: 0.5; }
-  .cta-step-text { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .cta-step-num { font-size: 28px; font-weight: 900; opacity: 0.5; }
+  .cta-step-text { font-size: 13px; font-weight: 700; margin-top: 4px; line-height: 1.4; }
+
+  /* === COHORT STRIP === */
+  .cohort-strip {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 48px 24px;
+    position: relative; overflow: hidden;
+  }
+  .cohort-strip::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(231,76,60,0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 50%, rgba(36,113,163,0.08) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .cohort-inner {
+    max-width: 1100px; margin: 0 auto; text-align: center;
+    position: relative; z-index: 1;
+  }
+  .cohort-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 8px;
+  }
+  .cohort-title {
+    font-size: clamp(22px, 3.5vw, 30px); font-weight: 900; color: var(--white);
+    margin-bottom: 28px; letter-spacing: -0.5px;
+  }
+  .cohort-pills {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
+  }
+  .pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px;
+    padding: 12px 22px;
+    display: flex; align-items: baseline; gap: 10px;
+    transition: transform 0.25s, background 0.25s, border-color 0.25s;
+    cursor: default;
+  }
+  .pill:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-3px);
+  }
+  .pill-num {
+    font-size: 22px; font-weight: 900; color: var(--white); letter-spacing: -0.5px;
+  }
+  .pill-num .accent-red { color: #e74c3c; }
+  .pill-num .accent-green { color: #2ecc71; }
+  .pill-num .accent-blue { color: #5dade2; }
+  .pill-num .accent-purple { color: #af7ac5; }
+  .pill-lbl {
+    font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,0.65);
+    text-transform: uppercase; letter-spacing: 1.3px;
+  }
+
+  /* === TOOLS GRID === */
+  .tools-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 14px; margin-top: 28px;
+  }
+  @media (max-width: 900px) {
+    .tools-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .tools-grid { grid-template-columns: 1fr; }
+  }
+  .tools-grid a { text-decoration: none; }
+  .tool-card {
+    background: #fff; border-radius: 16px; padding: 22px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-top: 5px solid;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    height: 100%;
+  }
+  .tool-card:hover { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0,0,0,0.10); }
+  .tool-icon { font-size: 38px; margin-bottom: 6px; }
+  .tool-title { font-size: 15px; font-weight: 800; color: #2c3e50; }
+  .tool-sub { font-size: 11.5px; font-weight: 600; color: #7f8c8d; margin-top: 4px; line-height: 1.4; }
 
   /* === FOOTER === */
   .site-footer {
@@ -329,7 +466,7 @@
     <a href="#criteria">Criteria</a>
     <a href="#protocol">Protocol</a>
     <a href="#data">Data</a>
-    <a href="#findings">Findings</a>
+    <a href="#findings">Reveals</a>
     <a href="#action">Action</a>
     <a href="#tools">Tools</a>
   </div>
@@ -365,20 +502,58 @@
 
     <div class="problem-grid">
       <div class="problem-card">
-        <div class="problem-stat">34%</div>
-        <div class="problem-label">of draws are mistimed<br>(outside C0 window)</div>
+        <div class="problem-stat">63.8%</div>
+        <div class="problem-label">of draws miss the target window<br>(outside 08:15&ndash;08:45)</div>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">14</div>
-        <div class="problem-label">draws done at 3&ndash;4 AM<br>with routine morning labs</div>
+        <div class="problem-stat">11</div>
+        <div class="problem-label">draws drawn between 01:00&ndash;05:59<br>with routine overnight labs</div>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">167<span style="font-size:20px">min</span></div>
+        <div class="problem-stat">200<span style="font-size:20px">min</span></div>
         <div class="problem-label">median time from result<br>to provider dose order</div>
       </div>
       <div class="problem-card">
-        <div class="problem-stat">5</div>
-        <div class="problem-label">repeat draws ordered<br>due to timing issues</div>
+        <div class="problem-stat">100%</div>
+        <div class="problem-label">of repeat draws originate<br>from early-AM mistiming</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COHORT AT A GLANCE -->
+<section class="cohort-strip">
+  <div class="cohort-inner">
+    <div class="cohort-label">Cohort at a Glance</div>
+    <div class="cohort-title">Who we studied, how much, and where.</div>
+    <div class="cohort-pills">
+      <div class="pill">
+        <span class="pill-num"><span class="accent-blue">14</span></span>
+        <span class="pill-lbl">Adult OHT Patients</span>
+      </div>
+      <div class="pill">
+        <span class="pill-num"><span class="accent-green">163</span></span>
+        <span class="pill-lbl">Analytic Draws</span>
+      </div>
+      <div class="pill">
+        <span class="pill-num"><span class="accent-purple">8</span></span>
+        <span class="pill-lbl">Weeks Baseline</span>
+      </div>
+      <div class="pill">
+        <span class="pill-num">Feb&ndash;Apr</span>
+        <span class="pill-lbl">2026</span>
+      </div>
+      <div class="pill">
+        <span class="pill-num"><span class="accent-red">95.7%</span></span>
+        <span class="pill-lbl">Tacrolimus</span>
+      </div>
+      <div class="pill">
+        <span class="pill-num"><span class="accent-purple">52%</span></span>
+        <span class="pill-lbl">On IMC</span>
+      </div>
+      <div class="pill">
+        <span class="pill-num">82<span style="font-size:14px">/</span>18</span>
+        <span class="pill-lbl">PO &mdash; Sublingual Mix</span>
       </div>
     </div>
   </div>
@@ -465,30 +640,34 @@
       </div>
       <div class="protocol-step">
         <div class="protocol-time">08:15 &ndash; 08:45</div>
-        <div class="protocol-action-text">Draw the trough level. Target time: <strong>08:30</strong>. This is the C0 window &mdash; 0 to 60 minutes before the next dose.</div>
+        <div class="protocol-action-text"><strong>DRAW FIRST.</strong> Collect the trough level <strong>before</strong> administering the morning dose. Target time: <strong>08:30</strong>. This is the C0 window &mdash; 0 to 60 minutes before the next dose.</div>
       </div>
       <div class="protocol-step">
         <div class="protocol-time">By 09:00</div>
-        <div class="protocol-action-text">Administer the scheduled immunosuppressant dose <strong>immediately after the draw</strong>. Do not hold the dose for the result.</div>
+        <div class="protocol-action-text"><strong>THEN DOSE.</strong> Administer the scheduled immunosuppressant dose <strong>immediately after the draw</strong>. Do not hold the dose for the result.</div>
       </div>
       <div class="protocol-step">
         <div class="protocol-time">MAR Documentation</div>
-        <div class="protocol-action-text">Record the <strong>actual clock time</strong> the previous dose was given (the "Given" time, not the scheduled time). This is the last-dose documentation.</div>
+        <div class="protocol-action-text">Record the <strong>actual administration clock time</strong> for every dose (morning and evening). If a dose is given late (&gt;30 min off schedule), <strong>document the reason</strong> in the MAR note &mdash; procedure, NPO, pt refused, transfer, medication delay, etc. This context is essential for interpreting the next trough.</div>
       </div>
       <div class="protocol-step">
         <div class="protocol-time">Escalation</div>
-        <div class="protocol-action-text">If the window is missed (it's past 09:00 with no draw), if night shift drew with AM labs, or if there's any dosing ambiguity &mdash; <strong>contact the transplant provider immediately</strong>.</div>
+        <div class="protocol-action-text">Contact the transplant provider immediately if: the 08:30 window is missed (it's past 09:00 with no draw); night shift drew with 01:00&ndash;06:00 labs; <strong>the dose was given BEFORE the trough was drawn</strong> (the level is invalid as a C0); or there is any dosing ambiguity.</div>
       </div>
     </div>
 
     <div class="protocol-warnings">
       <div class="pw">
         <div class="pw-icon">&#128683;</div>
-        <div class="pw-text">Do NOT draw troughs with routine 03:00&ndash;04:00 AM labs</div>
+        <div class="pw-text">Do NOT draw troughs with routine 01:00&ndash;06:00 AM labs</div>
       </div>
       <div class="pw">
         <div class="pw-icon">&#9202;&#65039;</div>
         <div class="pw-text">Do NOT hold the dose waiting for the lab result</div>
+      </div>
+      <div class="pw">
+        <div class="pw-icon">&#9940;</div>
+        <div class="pw-text">If the dose was given BEFORE the draw &mdash; the trough is invalid. Contact the transplant provider.</div>
       </div>
     </div>
   </div>
@@ -499,51 +678,51 @@
   <div class="section-inner">
     <div class="section-label">Baseline Data</div>
     <h2 class="section-title">What we found before the protocol.</h2>
-    <p class="section-text">113 trough draws across 10 heart transplant patients over 5 weeks of baseline observation. No care was altered. Here's what the data shows.</p>
+    <p class="section-text">163 analytic trough draws across 14 heart transplant patients over 8 weeks of baseline observation. No care was altered. Here's what the data shows.</p>
 
     <div class="data-grid">
       <div class="data-card data-card-red">
         <div class="data-card-label">On-Time Trough Rate</div>
-        <div class="data-card-value">65.7%</div>
-        <div class="data-card-sub">Target: &ge;70% &mdash; we're not there yet</div>
+        <div class="data-card-value">36.2%</div>
+        <div class="data-card-sub">Only 1 in 3 draws hit the 08:15&ndash;08:45 target &mdash; clear room to improve (Target: &ge;70%)</div>
       </div>
       <div class="data-card data-card-green">
         <div class="data-card-label">Last-Dose Documented</div>
-        <div class="data-card-value">97.1%</div>
-        <div class="data-card-sub">Strong baseline &mdash; nurses are documenting</div>
+        <div class="data-card-value">95.7%</div>
+        <div class="data-card-sub">Strong baseline &mdash; nurses are already documenting. The gap is timing, not engagement.</div>
       </div>
       <div class="data-card data-card-yellow">
         <div class="data-card-label">Time to Clinical Decision</div>
-        <div class="data-card-value">167<span style="font-size:20px">m</span></div>
-        <div class="data-card-sub">Median: nearly 3 hours from result to order</div>
+        <div class="data-card-value">200<span style="font-size:20px">m</span></div>
+        <div class="data-card-sub">Median over 3 hours (IQR 129&ndash;274 min) from result to provider order</div>
       </div>
       <div class="data-card data-card-blue">
         <div class="data-card-label">Patients Monitored</div>
-        <div class="data-card-value">10</div>
-        <div class="data-card-sub">113 draws &bull; 95% tacrolimus</div>
+        <div class="data-card-value">14</div>
+        <div class="data-card-sub">163 analytic draws &bull; 95.7% tacrolimus &bull; 52% on IMC</div>
       </div>
     </div>
 
     <!-- Draw Timing Chart -->
     <div class="bar-chart">
-      <div class="bar-chart-title">When Are Troughs Being Drawn?</div>
+      <div class="bar-chart-title">When Are Troughs Being Drawn? (N=163)</div>
       <div class="bar-row">
         <div class="bar-label">Before 07:00</div>
         <div class="bar-track">
-          <div class="bar-fill bar-fill-red" style="width:18.7%">14</div>
+          <div class="bar-fill bar-fill-red" style="width:20.3%">12</div>
         </div>
       </div>
       <div class="bar-row">
         <div class="bar-label">07:00 &ndash; 08:14</div>
         <div class="bar-track">
-          <div class="bar-fill bar-fill-yellow" style="width:25.3%">19</div>
+          <div class="bar-fill bar-fill-yellow" style="width:33.9%">20</div>
         </div>
       </div>
       <div class="bar-row">
         <div class="bar-label">08:15 &ndash; 08:45</div>
         <div class="bar-track">
-          <div class="bar-fill bar-fill-green" style="width:49.3%">37</div>
-          <div class="bar-target" style="left:49.3%">
+          <div class="bar-fill bar-fill-green" style="width:100%">59</div>
+          <div class="bar-target" style="left:100%">
             <div class="bar-target-label">Target Window</div>
           </div>
         </div>
@@ -551,50 +730,64 @@
       <div class="bar-row">
         <div class="bar-label">08:46 &ndash; 09:00</div>
         <div class="bar-track">
-          <div class="bar-fill bar-fill-yellow" style="width:25.3%">19</div>
+          <div class="bar-fill bar-fill-yellow" style="width:49.2%">29</div>
         </div>
       </div>
       <div class="bar-row">
         <div class="bar-label">After 09:00</div>
         <div class="bar-track">
-          <div class="bar-fill bar-fill-red" style="width:32%">24</div>
+          <div class="bar-fill bar-fill-red" style="width:72.9%">43</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINDINGS -->
-<section class="findings" id="findings">
+<!-- WHAT THE DATA REVEALED -->
+<section class="reveal findings" id="findings">
   <div class="section-inner">
-    <div class="section-label">Key Findings</div>
-    <h2 class="section-title">What the data tells us &mdash; and why the protocol will work.</h2>
+    <div class="section-label">What The Data Revealed</div>
+    <h2 class="section-title">Six signals that shaped the protocol.</h2>
+    <p class="section-text">Every number below is drawn from the locked 8-week baseline (N=163 analytic draws, 14 patients). Each card is a specific, quantified finding &mdash; and a direct input into how the intervention was designed.</p>
 
-    <div class="findings-grid">
-      <div class="finding-card fc-red">
-        <h4>Night Shift is the Primary Driver</h4>
-        <p>14 draws occurred between 03:00&ndash;04:00 AM with routine morning labs. These are never true troughs &mdash; they're 5+ hours early. The protocol's fixed 08:30 window eliminates this entirely.</p>
+    <div class="reveal-grid">
+
+      <div class="reveal-card rc-red">
+        <div class="reveal-stat">11</div>
+        <div class="reveal-title">Overnight Draws</div>
+        <div class="reveal-text">Eleven draws landed between <strong>01:00&ndash;05:59</strong> with routine overnight labs. These are not C0 troughs &mdash; they're 3&ndash;8 hours too early. Every single one distorted the clinical picture.</div>
       </div>
-      <div class="finding-card fc-yellow">
-        <h4>Nearly 3 Hours to a Dose Decision</h4>
-        <p>Median time from result posting to provider order is 167 minutes. When troughs are drawn at 08:30 and results post by 10:00, providers can act before rounds end &mdash; cutting this window significantly.</p>
+
+      <div class="reveal-card rc-orange">
+        <div class="reveal-stat">100<span class="sub">%</span></div>
+        <div class="reveal-title">Repeat Draws = Early-AM</div>
+        <div class="reveal-text">Every single repeat draw (7/7) originated from an early-AM mistiming. Eliminate the overnight draw, eliminate the waste. One root cause, one intervention point.</div>
       </div>
-      <div class="finding-card fc-green">
-        <h4>Documentation is Already Strong</h4>
-        <p>97.1% of draws already have last-dose documentation. The protocol reinforces an existing strength and standardizes it &mdash; this isn't a behavior change, it's a workflow lock-in.</p>
+
+      <div class="reveal-card rc-green">
+        <div class="reveal-stat">95.7<span class="sub">%</span></div>
+        <div class="reveal-title">Documentation is Solid</div>
+        <div class="reveal-text">Last-dose times are documented in the MAR 95.7% of the time. Nurses are already engaged &mdash; the gap is <strong>timing</strong>, not culture. The protocol reinforces an existing strength.</div>
       </div>
-      <div class="finding-card fc-blue">
-        <h4>The Gap is Closeable</h4>
-        <p>On-time trough rate is 65.7% &mdash; only 4.3 percentage points from the 70% target. 37 of 75 non-excluded draws already land in the 08:15&ndash;08:45 window. With a standardized protocol, this gap is highly closeable.</p>
+
+      <div class="reveal-card rc-blue">
+        <div class="reveal-stat">36.2<span class="sub">%</span></div>
+        <div class="reveal-title">Only 1 in 3 Hit Target</div>
+        <div class="reveal-text">Just 36.2% of draws land in the 08:15&ndash;08:45 window. That is the opportunity. A fixed window plus visual cues plus audit-and-feedback is how this number climbs past 70%.</div>
       </div>
-      <div class="finding-card fc-red">
-        <h4>Repeat Draws = Wasted Resources</h4>
-        <p>5 repeat draws were ordered because of timing issues (4.8%). Each repeat draw costs nursing time, lab resources, and delays clinical decisions. The protocol targets this directly.</p>
+
+      <div class="reveal-card rc-purple">
+        <div class="reveal-stat">IMC</div>
+        <div class="reveal-title">52% on One Unit</div>
+        <div class="reveal-text">52% of all baseline draws occurred on IMC (85 of 163). The rollout emphasizes IMC first &mdash; training here moves most of the care, fastest.</div>
       </div>
-      <div class="finding-card fc-green">
-        <h4>Zero Dose-Change Reversals</h4>
-        <p>No dose changes were reversed within 72 hours during baseline. This is a positive finding that establishes a clean starting point &mdash; the protocol aims to keep it that way as trough accuracy improves.</p>
+
+      <div class="reveal-card rc-red">
+        <div class="reveal-stat">6</div>
+        <div class="reveal-title">Admission Disruption</div>
+        <div class="reveal-text">Six draws happened in the context of a new admission or readmission, where logistics disrupt timing. The protocol adds a <strong>"first 24 hours"</strong> layer specifically for newly admitted transplant recipients.</div>
       </div>
+
     </div>
   </div>
 </section>
@@ -612,7 +805,7 @@
       </div>
       <div class="cta-step">
         <div class="cta-step-num">2</div>
-        <div class="cta-step-text">Draw trough at 08:30 (08:15&ndash;08:45)</div>
+        <div class="cta-step-text">Draw trough <strong>first</strong> (08:15&ndash;08:45), then dose</div>
       </div>
       <div class="cta-step">
         <div class="cta-step-num">3</div>
@@ -620,7 +813,11 @@
       </div>
       <div class="cta-step">
         <div class="cta-step-num">4</div>
-        <div class="cta-step-text">Document the actual last-dose time in MAR</div>
+        <div class="cta-step-text">Document actual administration time + reason if late</div>
+      </div>
+      <div class="cta-step">
+        <div class="cta-step-num">5</div>
+        <div class="cta-step-text">Dose given before draw? Contact transplant provider</div>
       </div>
     </div>
   </div>
@@ -633,37 +830,37 @@
     <h2 class="section-title">Interactive Tools & Resources</h2>
     <p class="section-text">Everything you need at the bedside. Tap any card to open the tool.</p>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:28px;">
+    <div class="tools-grid">
 
-      <a href="screener.html" style="text-decoration:none;">
-        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.06);border-top:5px solid #27ae60;text-align:center;transition:transform 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-          <div style="font-size:42px;margin-bottom:8px;">&#9989;</div>
-          <div style="font-size:16px;font-weight:800;color:#2c3e50;">Patient Screener</div>
-          <div style="font-size:12px;font-weight:600;color:#7f8c8d;margin-top:4px;">Does this patient qualify?<br>Step-by-step inclusion/exclusion check</div>
+      <a href="screener.html">
+        <div class="tool-card" style="border-top-color:#27ae60;">
+          <div class="tool-icon">&#9989;</div>
+          <div class="tool-title">Patient Screener</div>
+          <div class="tool-sub">Does this patient qualify?<br>Step-by-step check</div>
         </div>
       </a>
 
-      <a href="escalation.html" style="text-decoration:none;">
-        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.06);border-top:5px solid #e67e22;text-align:center;transition:transform 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-          <div style="font-size:42px;margin-bottom:8px;">&#128222;</div>
-          <div style="font-size:16px;font-weight:800;color:#2c3e50;">Escalation Guide</div>
-          <div style="font-size:12px;font-weight:600;color:#7f8c8d;margin-top:4px;">Window missed? Night shift drew early?<br>Interactive decision tree</div>
+      <a href="escalation.html">
+        <div class="tool-card" style="border-top-color:#e67e22;">
+          <div class="tool-icon">&#128222;</div>
+          <div class="tool-title">Escalation Guide</div>
+          <div class="tool-sub">Window missed? Dose before draw?<br>Interactive decision tree</div>
         </div>
       </a>
 
-      <a href="quick-guide.html" style="text-decoration:none;">
-        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.06);border-top:5px solid #c0392b;text-align:center;transition:transform 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-          <div style="font-size:42px;margin-bottom:8px;">&#128203;</div>
-          <div style="font-size:16px;font-weight:800;color:#2c3e50;">Nurse Quick Guide</div>
-          <div style="font-size:12px;font-weight:600;color:#7f8c8d;margin-top:4px;">Full protocol reference<br>Identify &rarr; Time &rarr; Document &rarr; Escalate</div>
+      <a href="quick-guide.html">
+        <div class="tool-card" style="border-top-color:#c0392b;">
+          <div class="tool-icon">&#128203;</div>
+          <div class="tool-title">Nurse Quick Guide</div>
+          <div class="tool-sub">Full protocol reference<br>Identify &rarr; Time &rarr; Document &rarr; Escalate</div>
         </div>
       </a>
 
-      <a href="resources/Transplant_Door_Sign.pdf" style="text-decoration:none;">
-        <div style="background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.06);border-top:5px solid #2471a3;text-align:center;transition:transform 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-          <div style="font-size:42px;margin-bottom:8px;">&#128682;</div>
-          <div style="font-size:16px;font-weight:800;color:#2c3e50;">Door Sign (PDF)</div>
-          <div style="font-size:12px;font-weight:600;color:#7f8c8d;margin-top:4px;">TRANSPLANT door placard<br>Print and post on patient doors</div>
+      <a href="resources/Transplant_Door_Sign.pdf">
+        <div class="tool-card" style="border-top-color:#2471a3;">
+          <div class="tool-icon">&#128682;</div>
+          <div class="tool-title">Door Sign (PDF)</div>
+          <div class="tool-sub">TRANSPLANT door placard<br>Print and post on patient doors</div>
         </div>
       </a>
 

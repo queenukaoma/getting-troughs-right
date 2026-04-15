@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Transplant Door Sign — Getting Troughs Right</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  @page {
+    size: Letter;
+    margin: 0.4in;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+    color: #2c3e50;
+    background: #fff;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 7.7in;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 50%, #c0392b 100%);
+    padding: 28px 20px 22px;
+    text-align: center;
+    border-radius: 16px 16px 0 0;
+    color: #fff;
+  }
+  .heart { font-size: 44px; line-height: 1; margin-bottom: 6px; }
+  .title {
+    font-size: 70px; font-weight: 900; letter-spacing: 14px;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 18px; font-weight: 700; letter-spacing: 5px;
+    text-transform: uppercase; opacity: 0.95;
+  }
+
+  .banner {
+    background: #2c3e50; color: #fff;
+    font-size: 13px; font-weight: 800; letter-spacing: 4px;
+    text-align: center; padding: 12px 10px; text-transform: uppercase;
+  }
+
+  .body { padding: 16px 18px 14px; }
+
+  .row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 18px; margin-bottom: 9px;
+    border-radius: 12px; border-left: 6px solid;
+  }
+  .row-icon { font-size: 30px; line-height: 1; min-width: 38px; text-align: center; }
+  .row-time {
+    font-size: 22px; font-weight: 900; color: #2c3e50;
+    line-height: 1.1; margin-bottom: 2px; letter-spacing: -0.5px;
+  }
+  .row-text {
+    font-size: 13px; font-weight: 600; color: #34495e; line-height: 1.45;
+  }
+  .row-sub {
+    font-size: 11.5px; font-weight: 600; color: #5d6d7e;
+    margin-top: 4px; line-height: 1.45;
+  }
+
+  .row-blue { background: #eaf2ff; border-color: #2471a3; }
+  .row-green { background: #e8f8f0; border-color: #27ae60; }
+  .row-yellow { background: #fef9e7; border-color: #f39c12; }
+  .row-purple { background: #f4ecfb; border-color: #8e44ad; }
+  .row-purple .row-text strong { color: #6c3483; }
+
+  .warn {
+    background: #fdf2f2; border: 2px solid #e74c3c;
+    border-radius: 10px; padding: 10px 14px;
+    display: flex; align-items: center; gap: 11px;
+    margin-bottom: 8px;
+  }
+  .warn-icon { font-size: 22px; min-width: 28px; text-align: center; }
+  .warn-text { font-size: 12.5px; font-weight: 800; color: #922b21; line-height: 1.35; }
+
+  .warn-orange {
+    background: #fef2e6; border-color: #e67e22;
+  }
+  .warn-orange .warn-text { color: #a04000; }
+
+  .call {
+    background: linear-gradient(135deg, #2471a3 0%, #1a5276 100%);
+    color: #fff; padding: 14px 18px;
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 10px;
+  }
+  .call-icon { font-size: 24px; min-width: 32px; text-align: center; }
+  .call-title { font-size: 14px; font-weight: 900; line-height: 1.2; }
+  .call-sub { font-size: 12px; font-weight: 700; opacity: 0.9; margin-top: 2px; }
+
+  .foot {
+    background: #2c3e50; color: #bdc3c7;
+    padding: 10px 14px; text-align: center;
+    font-size: 9.5px; font-weight: 600; letter-spacing: 0.4px;
+    border-radius: 0 0 16px 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <div class="header">
+    <div class="heart">&#10084;&#65039;</div>
+    <div class="title">TRANSPLANT</div>
+    <div class="subtitle">Heart Transplant Patient</div>
+  </div>
+
+  <div class="banner">Immunosuppressant Trough Protocol Active</div>
+
+  <div class="body">
+
+    <div class="row row-blue">
+      <div class="row-icon">&#128203;</div>
+      <div>
+        <div class="row-time">By 07:30</div>
+        <div class="row-text">Verify trough order is present. If not, contact provider.</div>
+      </div>
+    </div>
+
+    <div class="row row-green">
+      <div class="row-icon">&#128137;</div>
+      <div>
+        <div class="row-time">08:30 &ndash; DRAW FIRST</div>
+        <div class="row-text">Draw trough level <strong>before</strong> administering the morning dose.</div>
+        <div class="row-sub">Window: 08:15 &ndash; 08:45</div>
+      </div>
+    </div>
+
+    <div class="row row-yellow">
+      <div class="row-icon">&#128138;</div>
+      <div>
+        <div class="row-time">By 09:00 &ndash; THEN DOSE</div>
+        <div class="row-text">Administer the scheduled dose <strong>immediately after the draw</strong>.</div>
+      </div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-icon">&#128683;</div>
+      <div class="warn-text">Do NOT draw trough with routine overnight labs (01:00 &ndash; 06:00)</div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-icon">&#9202;&#65039;</div>
+      <div class="warn-text">Do NOT hold the dose waiting for the lab result</div>
+    </div>
+
+    <div class="warn warn-orange">
+      <div class="warn-icon">&#9940;</div>
+      <div class="warn-text">Dose given BEFORE the draw = invalid trough. Contact transplant provider.</div>
+    </div>
+
+    <div class="row row-purple">
+      <div class="row-icon">&#128221;</div>
+      <div>
+        <div class="row-time" style="font-size:17px;">MAR Documentation</div>
+        <div class="row-text"><strong>Every dose:</strong> record the <strong>actual administration clock time</strong> (not the scheduled time).</div>
+        <div class="row-sub"><strong>If a dose is given late</strong> (&gt;30 min off schedule): document the <strong>reason</strong> in the MAR note &mdash; procedure, NPO, pre-procedural, pt refused, transfer, medication delay, etc.</div>
+      </div>
+    </div>
+
+    <div class="call">
+      <div class="call-icon">&#128222;</div>
+      <div>
+        <div class="call-title">Window missed, dose before draw, or timing unclear?</div>
+        <div class="call-sub">Contact transplant provider immediately</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    Getting Troughs Right &mdash; Ascension Seton Medical Center &bull; PI: Queen Ukaoma, MSN, APRN, ACNPC-AG, CCRN-CMC
+  </div>
+
+</div>
+
+</body>
+</html>

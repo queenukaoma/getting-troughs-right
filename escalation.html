@@ -57,6 +57,8 @@
   .result-blue h3, .result-blue p { color: #1a5276; }
   .result-yellow { background: linear-gradient(135deg, #fef9e7, #fdeaa8); border: 3px solid #f39c12; }
   .result-yellow h3, .result-yellow p { color: #7d6608; }
+  .result-red { background: linear-gradient(135deg, #fadbd8, #f5b7b1); border: 3px solid #c0392b; }
+  .result-red h3, .result-red p { color: #922b21; }
 
   .action-list {
     text-align: left; margin-top: 12px; padding: 16px; background: rgba(255,255,255,0.5);
@@ -117,7 +119,8 @@
       <div class="card-icon">&#10067;</div>
       <div class="card-q">What happened?</div>
     </div>
-    <button class="btn btn-action" onclick="show('r_nightshift')" style="margin-bottom:4px">Night shift drew with 03:00&ndash;04:00 AM labs</button>
+    <button class="btn btn-action" onclick="show('r_nightshift')" style="margin-bottom:4px">Night shift drew with 01:00&ndash;06:00 AM labs</button>
+    <button class="btn btn-action" onclick="show('r_dose_before_draw')" style="margin-bottom:4px">Dose was given BEFORE the trough was drawn</button>
     <button class="btn btn-action" onclick="show('r_missed')" style="margin-bottom:4px">It's past 09:00 and no trough was drawn</button>
     <button class="btn btn-action" onclick="show('r_ambiguous')">Dosing times or med schedule is unclear</button>
   </div>
@@ -151,13 +154,29 @@
   <div class="decision" id="r_nightshift">
     <div class="result result-yellow">
       <div class="result-icon">&#127769;</div>
-      <h3>Escalate &mdash; Night Shift Draw</h3>
-      <p>A 03:00&ndash;04:00 AM draw is NOT a true trough. It's 5+ hours early.</p>
+      <h3>Escalate &mdash; Early-AM Draw</h3>
+      <p>A 01:00&ndash;06:00 AM draw is NOT a true trough. It's hours too early relative to the next dose.</p>
       <div class="action-list">
         <li>&#128222; Contact transplant provider immediately</li>
         <li>&#128203; Provider decides: accept level or order re-draw at correct time</li>
         <li>&#128221; Document the variance and provider decision in the chart</li>
         <li>&#128138; Do NOT hold the dose while waiting</li>
+      </div>
+    </div>
+    <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
+  </div>
+
+  <!-- RESULT: DOSE BEFORE DRAW -->
+  <div class="decision" id="r_dose_before_draw">
+    <div class="result result-red">
+      <div class="result-icon">&#9940;</div>
+      <h3>Escalate &mdash; Dose Given Before Draw</h3>
+      <p>If the immunosuppressant was administered <strong>before</strong> the trough was drawn, the level is NOT a valid C0. It reflects post-dose pharmacokinetics, not steady-state trough &mdash; the number can mislead dosing decisions.</p>
+      <div class="action-list">
+        <li>&#128222; Contact the transplant provider immediately</li>
+        <li>&#128203; Provider decides: discard level, or re-draw at the correct pre-dose window</li>
+        <li>&#128221; Document the administration time, draw time, and the provider decision in the MAR</li>
+        <li>&#128137; Document the <strong>reason</strong> the dose was given before the draw (procedure, home dose, admission, early admin)</li>
       </div>
     </div>
     <button class="btn btn-restart" onclick="show('d0')">Start Over</button>
